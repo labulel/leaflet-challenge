@@ -32,7 +32,6 @@
   // function styles()
     // Conditionals for countries points
     
-    
     function getcolor(x){
     var color = "";
     if (x>= 20) {
@@ -65,7 +64,7 @@
 
     // Give each feature a popup describing the place and time of the earthquake
       layer.bindPopup("<h3>" + "Magnitude: " + feature.properties.mag + "; " + "Depth: " + feature.geometry.coordinates[2]+
-        "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
+        "</h3><hr><p>" + feature.properties.place + "</p>");
     }
   
     // Create a GeoJSON layer containing the features array on the earthquakeData object
@@ -132,4 +131,51 @@ function createMap(earthquakes) {
   L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
   }).addTo(myMap);
+
+// Add legend to the map
+
+function getlegendcolor(y) {
+  var color = "";
+  if (y>= 20) {
+    color = "green";
+  }
+
+  else if (y >= 15 & y <20) {
+    color = "yellow";
+  }
+
+  else if (y >= 10 & y <15) {
+    color = "orange";
+  }
+
+  else {
+    color = "red";
+  }
+  return color
 }
+
+
+
+var legend = L.control({position: 'bottomright'});
+  
+legend.onAdd = function (map) {
+
+    var div = L.DomUtil.create('div', 'info legend'),
+        depths = [0, 10, 15, 20],
+        labels = [];
+
+        
+    for (var i = 0; i < depths.length; i++) {
+        div.innerHTML +=
+            '<i style="background:' + getlegendcolor(depths[i] + 1) + '"></i> ' +
+            depths[i] + (depths[i + 1] ? '&ndash;' + depths[i + 1] + '<br>' : '+');
+    }
+
+    return div;
+};
+
+legend.addTo(myMap);
+  };
+  
+
+  
