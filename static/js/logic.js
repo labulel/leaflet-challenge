@@ -1,6 +1,6 @@
 
 
-// // Creating map object
+// Creating map object
 // var myMap = L.map("mapid", {
 //     center: [40.7128, -74.0059],
 //     zoom: 11
@@ -26,10 +26,39 @@
     console.log(data)
       // Once we get a response, send the data.features object to the createFeatures function
     createFeatures(data.features);
+
   });
 
-  var mag = [];
-  var depth = [];
+  // function styles()
+    // Conditionals for countries points
+    
+    
+    function getcolor(x){
+    var color = "";
+    if (x< 9) {
+      color = "#ff3d33";
+    }
+    else if (x < 7) {
+      color = "#ff8833";
+    }
+    else if (x < 5) {
+      color = "#ffc233";
+    }
+
+    else if (x < 3) {
+      color = "#ffeb33";
+    }
+
+    else if (x < 1) {
+      color = "#ebff33";
+    }
+
+    else {
+      color = "#3aff33";
+    }
+    return color
+  }
+  
 
 
   function createFeatures(earthquakeData) {
@@ -39,15 +68,6 @@
     function onEachFeature(feature, layer) {
 
     //draw circles based on magnitude
-      L.circle([features.geometry[1],features.geometry[0]], {
-        stroke: false,
-        fillOpacity: 0.75,
-        color: "white",
-        fillColor: "white",
-        radius: 2000
-      });
-
-
 
     // Give each feature a popup describing the place and time of the earthquake
       layer.bindPopup("<h3>" + feature.properties.mag +
@@ -57,7 +77,23 @@
     // Create a GeoJSON layer containing the features array on the earthquakeData object
     // Run the onEachFeature function once for each piece of data in the array
     var earthquakes = L.geoJSON(earthquakeData, {
-      onEachFeature: onEachFeature
+      onEachFeature: onEachFeature,
+
+      pointToLayer: function(feature,latlng){
+        var depth = feature.geometry.coordinates[2]
+        var featurecolor = getcolor(depth)
+  
+        var mag = feature.properties.mag
+        
+        return L.circleMarker(latlng, {
+          stroke: false,
+          fillOpacity: 0.75,
+          radius:mag*5,
+          color:featurecolor
+        })
+        
+      }
+
     });
   
     // Sending our earthquakes layer to the createMap function
