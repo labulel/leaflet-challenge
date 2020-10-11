@@ -35,26 +35,20 @@
     
     function getcolor(x){
     var color = "";
-    if (x< 9) {
-      color = "#ff3d33";
-    }
-    else if (x < 7) {
-      color = "#ff8833";
-    }
-    else if (x < 5) {
-      color = "#ffc233";
+    if (x>= 20) {
+      color = "green";
     }
 
-    else if (x < 3) {
-      color = "#ffeb33";
+    else if (x >= 15 & x <20) {
+      color = "yellow";
     }
 
-    else if (x < 1) {
-      color = "#ebff33";
+    else if (x >= 10 & x <15) {
+      color = "orange";
     }
 
     else {
-      color = "#3aff33";
+      color = "red";
     }
     return color
   }
@@ -70,7 +64,7 @@
     //draw circles based on magnitude
 
     // Give each feature a popup describing the place and time of the earthquake
-      layer.bindPopup("<h3>" + feature.properties.mag +
+      layer.bindPopup("<h3>" + "Magnitude: " + feature.properties.mag + "; " + "Depth: " + feature.geometry.coordinates[2]+
         "</h3><hr><p>" + new Date(feature.properties.time) + "</p>");
     }
   
