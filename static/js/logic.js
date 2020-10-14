@@ -134,28 +134,6 @@ function createMap(earthquakes) {
 
 // Add legend to the map
 
-// function getlegendcolor(y) {
-//   var color = "";
-//   if (y>= 20) {
-//     color = "green";
-//   }
-
-//   else if (y >= 15 & y <20) {
-//     color = "yellow";
-//   }
-
-//   else if (y >= 10 & y <15) {
-//     color = "orange";
-//   }
-
-//   else {
-//     color = "red";
-//   }
-//   return color
-// }
-
-
-
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function (map) {
@@ -163,6 +141,10 @@ legend.onAdd = function (map) {
     var div = L.DomUtil.create('div', 'info legend'),
         grades = [0, 10, 15, 20],
         labels = [];
+
+    var legendInfo = "<h1>Earthquake Depth</h1>"
+
+    div.innerHTML = legendInfo;
 
     // loop through our earthquake depth intervals and generate a label with a colored square for each interval
     for (var i = 0; i < grades.length; i++) {
